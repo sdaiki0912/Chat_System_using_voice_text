@@ -10,4 +10,12 @@ Basic idea is following 4things.<br>
  - Text to Text(General communication): Text -Network-> Text<br>
  - Voice to Voice(General communication): Voice -Network-> Voice<br>
 
- 
+## Voice to Text
+
+## Text to Voice
+
+## Text to Text
+
+## Voice to Voice
+
+# User Interface
