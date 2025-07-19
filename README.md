@@ -19,3 +19,5 @@ Basic idea is following 4things.<br>
 ## Voice to Voice
 
 # User Interface
+This syetem shold be working on smart phone. However I am not fimilyer with application lanege of smart phonre.
+So, Frist I will write python. Then I will wirte application lanege of smart phonre.
