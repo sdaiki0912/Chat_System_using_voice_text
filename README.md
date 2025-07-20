@@ -1,5 +1,5 @@
 # Overview
-Current basic　chat application is only text to text or voice to voice(call).
+Current basic chat application is only text to text or voice to voice(call).
 Therefore, this peple can't talk parson who is want to talk in voice and parson who is need to talk in text because situation. For example, Parson want to talk in train.
 So, I will propose new comunication tool. This is able to talk in text to voice, text to text and voice to voice(call).
 <br>This code made by google gemini. Special Thanks to google.
@@ -11,13 +11,63 @@ Basic idea is following 4things.<br>
  - Text to Text(General communication): Text -Network-> Text<br>
  - Voice to Voice(General communication)(Not scope）: Voice -Network-> Voice<br>
 
-## Voice to Text
+This is because there are people who would prefer to talk verbally, as on the phone, and people who are in public places, such as on trains, who prefer text-based conversations. Also, for people who find it daunting to suddenly make a phone call, it is conceivable that they could start by using voice input and then switch to voice halfway through.
+In this way, communication between people in a variety of environments becomes possible.
 
-## Text to Voice
+# Algorithm
+This setence created by gemini google.
+## Text-to-Text (T2T) 
+This is the core process for sending and receiving typed messages between users. It relies on the browser's BroadcastChannel API for real-time, serverless communication between tabs.<br>
 
-## Text to Text
+1. Message Input & Submission:<br>
+- A user types a message into the ```<input id="message-input">.```　 <br>
+- When the user presses "Enter" or clicks the send button, the ```<form>```'s ```submit``` event is triggered, which calls the ```sendMessage()``` function.　<br>
 
-## Voice to Voice
+2. Sending Process (sendMessage function):<br>
+- A ```messagePayload``` object is created, containing the message text, the sender's ID (```currentUserId```), and a ```timestamp```.<br>
+- **Instant Local Display**: The ```addMessage()``` function is immediately called to display the message on the sender's own screen. This provides instant feedback.<br>
+- **History Update**: The message is added to the ```chatHistory``` array and saved to the browser's ```localStorage``` using ```saveHistory()```.<br>
+- **Broadcasting**: The ```channel.postMessage()``` method is called. It sends the ```messagePayload``` with the type ```new_message``` to all other browser tabs connected to the same ```BroadcastChannel``` named ```'chat_app_sync'```.<br>
+
+3. Receiving Process (```channel.onmessage``` handler):<br>
+- The other user's browser tab receives the ```new_message``` event.
+- The ```onmessage``` handler first checks if the ```senderId``` in the payload is different from its own ```currentUserId``` to ensure it doesn't process its own echoed messages.
+- If the message is from the other user, it calls ```addMessage()``` to display the message on the screen and updates its local chat history.
+
+## Voice-to-Text (V2T)
+This process uses the browser's built-in Web Speech API (SpeechRecognition) to convert a user's speech into text. No external libraries are needed.<br>
+
+1. Activation:<br>
+- The user clicks the microphone button, which calls the ```toggleVoiceRecognition()``` function.<br>
+- This function starts the SpeechRecognition service by calling ```recognition.start()```.<br>
+- It also broadcasts a ```voice_input_start``` event via the ```BroadcastChannel``` to notify the other user that voice input has begun.<br>
+
+2. Speech Processing (Handled by the Browser):<br>
+- The browser listens for audio from the user's microphone.<br>
+- It sends this audio to a server (e.g., Google's or Apple's servers, depending on the browser) for processing.<br>
+- The server transcribes the audio into text and sends it back to the browser.<br>
+
+3. Receiving the Transcript (```recognition.onresult``` event):<br>
+- Once the browser receives the transcribed text, it fires the ```onresult``` event.<br>
+- Your ```recognition.onresult``` event handler extracts the final transcript from the event data.<br>
+- It then places this text into the ```<input id="message-input">```.<br>
+- Finally, it calls ```sendMessage('voice')``` to send the transcribed text, following the same T2T algorithm described above.<br>
+
+## Text-to-Voice (T2V)
+This process reads incoming messages aloud, also using the Web Speech API (SpeechSynthesis).<br>
+
+1. Trigger:<br>
+- The T2V process is triggered within the ```channel.onmessage``` handler when a new_message is received from the other user.<br>
+
+2. Condition Check:<br>
+- The code checks if the receiving user's own microphone is currently active (i.e., if ```isRecognizing``` is true). The voice playback only occurs if this condition is met.<br>
+
+3. Speech Synthesis (```speak function```):<br>
+- If the condition is met, the ```speak(text)``` function is called with the incoming message text.<br>
+- This function uses the ```window.speechSynthesis``` interface.<br>
+- It creates a new ```SpeechSynthesisUtterance``` object. This object contains the text to be spoken and configuration details, such as the language (```lang: 'ja-JP'```).<br>
+- The ```synth.speak(utterance)``` method is called, instructing the browser to read the text aloud using its built-in text-to-speech engine.<br>
+
 
 # How to use
 To run this chat application, you will need to use a simple local web server. This is necessary because modern web browsers have security policies that prevent direct communication between tabs when files are opened directly from your computer (i.e., using a file:/// URL).
@@ -29,7 +79,7 @@ You will need Python 3 installed on your system. Most macOS and Linux systems ha
    Navigate to the project directory. Use the cd (change directory) command to go to the folder where your project files are located.<br>
 3. Start the local web server. Run the following command in your terminal. This will start a web server on port 8000.
 ```bash:title
-cd /Users/daiki/Desktop/chatapp
+cd /<path>/chatapp
 ```
 4. You should see a message like Serving HTTP on :: port 8000 (http://0.0.0.0:8000/) .... Keep this terminal window open while you are using the application.
 ```bash
@@ -42,4 +92,12 @@ For User 2: Open another browser tab and go to this address: http://localhost:80
 
 # User Interface
 This syetem shold be working on smart phone. However I am not fimilyer with application lanege of smart phonre.
-So, Frist I will write HTML and Python. Then I will wirte application lanege of smart phonre.
+So, Frist I will write HTML and Java script. Then I will wirte application lanege of smart phonre.
+
+# Future
+I have following 2plan.<br>
+1. Development of applications for smartphones
+2. Added voice-to-voice calling feature(Include Added the function to convert voice to text/ text to voice to phone call(voice to voice)）
+
+
+
