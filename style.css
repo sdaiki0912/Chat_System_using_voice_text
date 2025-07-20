@@ -1,0 +1,181 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#app-container {
+    width: 90%;
+    max-width: 600px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+#recognition-status {
+    display: none; /* デフォルトでは非表示 */
+    padding: 8px;
+    background-color: #e74c3c; /* マイクボタンと同じ赤色 */
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#recognition-status.active {
+    display: block; /* activeクラスで表示 */
+}
+
+#chat-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.message-text {
+    word-break: break-word;
+}
+
+.message-timestamp {
+    font-size: 12px;
+    color: #a0a0a0;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.my-message .message-timestamp {
+    color: #c0c0c0;
+}
+
+.my-message {
+    background-color: #00539C;
+    color: white;
+    align-self: flex-end;
+}
+
+.other-message {
+    background-color: #3a3a3a;
+    align-self: flex-start;
+}
+
+#typing-indicator {
+    display: none;
+    padding: 0 20px 10px;
+    height: 20px; /* Reserve space to prevent layout jumps */
+    color: #aaa;
+    font-style: italic;
+    font-size: 14px;
+}
+
+#typing-indicator.active {
+    display: block;
+}
+
+#typing-indicator .dot {
+    animation: blink 1.4s infinite both;
+}
+
+#typing-indicator .dot:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+#voice-indicator {
+    display: none; /* Hidden by default */
+    padding: 0 20px 10px;
+    height: 20px; /* Reserve space */
+    color: #aaa;
+    font-style: italic;
+    font-size: 14px;
+    align-items: center;
+    gap: 8px;
+}
+
+#voice-indicator.active {
+    display: flex; /* Shown when active */
+}
+
+@keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+#message-form {
+    display: flex;
+    padding: 20px;
+    gap: 10px;
+    border-top: 1px solid #333;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+button {
+    padding: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+button:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+/* マイクが認識中のスタイル */
+#mic-button.is-recognizing {
+    background-color: #e74c3c; /* 赤色 */
+    color: white;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャット - ユーザー2</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body data-user-id="user2">
+    <div id="app-container">
+        <div id="recognition-status">
+            <span>音声認識機能がオンです</span>
+        </div>
+        <div id="chat-container">
+            <div id="chat-messages"></div>
+            <div id="typing-indicator"></div>
+            <div id="voice-indicator"></div>
+        </div>
+        <form id="message-form">
+            <input type="text" id="message-input" placeholder="メッセージを入力..." autocomplete="off">
+            <button type="button" id="mic-button" title="音声入力"><i class="fas fa-microphone"></i></button>
+            <button type="submit" id="send-button" title="送信" disabled><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
