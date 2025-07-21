@@ -1,5 +1,5 @@
 # Overview
-Current chat applications are typically limited to either text-to-text or voice-to-voice (calls). This creates a communication barrier when one person wants to speak aloud, while the other needs to use text due to their situation (e.g., being on a train). To solve this problem, I propose a new communication tool that seamlessly integrates text-to-voice, voice-to-text, and standard text messaging.
+Current basic chat applications are typically limited to either text-to-text or voice-to-voice (calls). This creates a communication barrier when one person wants to speak aloud, while the other needs to use text due to their situation (e.g., being on a train). To solve this problem, I propose a new communication tool that seamlessly integrates text-to-voice, voice-to-text, and standard text messaging.
 The core algorithm was drafted with the assistance of Google Gemini. Special thanks to Google.
 
 # Communication process(Overview)
